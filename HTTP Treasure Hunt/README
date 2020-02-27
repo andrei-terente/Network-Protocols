@@ -1,0 +1,78 @@
+TERENTE ANDREI-ALEXANDRU
+325 CA
+Protocoale de Comunicatie. Tema 3. README
+
+===============================================================================
+I. Compilare + rulare
+
+-------------------------------------------------------------------------------
+	-> fisierul Makefile trebuie sa se afle in acelasi folder cu sursele
+	-> 'make' va crea si rula executabilul "client".
+	-> regula 'clean' va sterge executabilul "client" (+ alte fisiere obiect din
+	directoriu).
+
+
+===============================================================================
+II. Detalii legate de implementare
+
+-------------------------------------------------------------------------------
+[1] Parsare, functii auxiliare, organizarea datelor
+-------------------------------------------------------------------------------
+	-> parsare continut in format JSON: am utilizat biblioteca Parson.
+
+	-> functii auxiliare:
+		- implementarea a pornit de la scheletul de laborator HTTP, astfel
+		majoritatea functiilor sunt fie direct preluate din laborator / adaptate
+		pt. functionarea temei;
+
+		- get_ip: adaptare a functiei folosite in laboratorul de DNS. Utilitatea
+		ramane neschimbata: intoarce adresa IP a domeniului primit ca parametru.
+		(utilizata in prima parte din task 5);
+
+		- extract_cookies: intoarce string-ul de cookies dintr-un mesaj primit
+		de la server (linii separate);
+
+		- concat_cookies: alipeste cookie-urile intoarse de functia precedenta
+		pe un singur rand. (conform precizarilor din cerinta si a format-ului
+		standard);
+
+	-> mentiuni depsre organizarea datelor:
+		- dat fiind volumul cunoscut de date gestionate in program, am optat
+		(unde era posibil) pt. folosirea buffer-elor alocate static.
+		- header-ele sunt stocate intr-un vector<char*>. Pt. fiecare task
+		vectorul este populat cu datele necesare, apoi golit pt. utilizarea
+		sa in urmatorul task.
+
+-------------------------------------------------------------------------------
+[2] Desfasurarea tipica a unui task 
+-------------------------------------------------------------------------------
+	-> intrucat task-urile sunt similare, voi descrie modul de desfasurare
+	al unui task, acesta putand fi aplicat oricarui task din cadrul temei:
+		- se populeaza campurile necesare crearii cererii ce trebuie trimisa
+		server-ului (host, url, url_params etc.) prin parsarea (prin intermediul 
+		unei functii corespunzatoare task-ului) mesajului primit de la server  
+		drept raspuns pt. task-ul anterior (in cazul task-ului 1, aceste campuri
+		sunt "hardcodate" deoarece nu exista un raspuns anterior);
+
+		- se creeaza efectiv mesajul ce va reprezenta cererea prin apelul fie
+		al 'compute_get_request' ori al 'compute_post_request' cu parametrii
+		extrasi din raspuns;
+
+		- se deschide un socket de comunicare cu server-ul;
+
+		- se trimite mesajul si se primeste raspunsul;
+
+		- se inchide socket-ul;
+
+		- se afiseaza la consola raspunsul.
+
+-------------------------------------------------------------------------------
+[3] Mentiuni suplimentare / Observatii:
+-------------------------------------------------------------------------------
+	-> am atasat in arhiva un fisie ("messages.txt") ce contine mesajele trimise server-ului
+	la fiecare task pt. verificarea faptului ca acestea respecta conditiile
+	impuse. (mesajele pot fi afisate la consola in timpul rularii prin
+	decomentarea liniilor din secventele in care se trimite mesajul catre server).
+
+	-> am presupus denumirea cheilor ca fiind cunoscuta. In consecinta, acestea
+	au fost hardcodate in program.

@@ -1,0 +1,48 @@
+TASK 1:
+
+GET /task1/start HTTP/1.1
+Host: 185.118.200.35
+
+TASK 2: 
+
+POST /task2/login HTTP/1.1
+Host: 185.118.200.35
+Cookie: prajiturica=eyJ1c2VybmFtZSI6IjY2dGxuOVBEIiwicGFzc3dvcmQiOiJCR3NoWmhVZCIsIl9leHBpcmUiOjE1NTgwMTg1NjUxMjUsIl9tYXhBZ2UiOjM2MDAwMDB9; path=/; expires=Thu, 16 May 2019 14:56:05 GMT; httponly; prajiturica.sig=lv4KZw_mIRDNJHcffVKk-4PlnVE; path=/; expires=Thu, 16 May 2019 14:56:05 GMT; httponly
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 35
+
+username=66tln9PD&password=BGshZhUd
+
+TASK 3:
+
+GET /task3/answer?raspuns1=omul&raspuns2=numele&id=z91cz8vljvqpvwvt HTTP/1.1
+Host: 185.118.200.35
+Cookie: prajiturica=eyJ1c2VybmFtZSI6IjY2dGxuOVBEIiwicGFzc3dvcmQiOiJCR3NoWmhVZCIsInRhc2syIjoiejkxY3o4dmxqdnFwdnd2dCIsIl9leHBpcmUiOjE1NTgwMTg1NzAxNzUsIl9tYXhBZ2UiOjM2MDAwMDB9; path=/; expires=Thu, 16 May 2019 14:56:10 GMT; httponly; prajiturica.sig=kfRHUwFy_55yZd1ENVxoj1tiI8I; path=/; expires=Thu, 16 May 2019 14:56:10 GMT; httponly
+Authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ino5MWN6OHZsanZxcHZ3dnQiLCJzY29wZSI6InN0dWRlbnQiLCJpYXQiOjE1NTgwMTQ5NzAsImV4cCI6MTU1ODAxODU3MCwiaXNzIjoiQWxleGFuZHJ1IEhvZ2VhIn0.u8sG4NYsxn6rHGEeystv4fEL7lz1IZoUKVCePnImNpGk6V-Dsrw6QQqoSt_MX0N2_6OJJYO-uiv7HzvTID-hzspQKNSOFW4qKLcWLpHnmUEVTrwGYe0lopDqKr0tDu39UJEMRsAeX8097oMQoRpPZd_KGx08Db-2DpMq55qcRwRbYaBuT4RxG_PSzKGdNXhaBJi0f7pNxf17_IGTGx_XHdSyyedT1Ap1vLefaWwx63IHxP9stHg00uY058xoIdUKpu-LYlAOKry8FUrK8qbXiuAtiSCG_nAdKaBNPq2ge0zOZC3lxdbQcDd_fXrRaLnS2mP8mqPHe7j0-qxc_eDxbg
+
+TASK 4:
+
+GET /task4/key HTTP/1.1
+Host: 185.118.200.35
+Cookie: prajiturica=eyJ1c2VybmFtZSI6IjY2dGxuOVBEIiwicGFzc3dvcmQiOiJCR3NoWmhVZCIsInRhc2syIjoiejkxY3o4dmxqdnFwdnd2dCIsInRhc2szIjoiY29tcGxldGVkIiwiX2V4cGlyZSI6MTU1ODAxODU3NTI4NywiX21heEFnZSI6MzYwMDAwMH0=; path=/; expires=Thu, 16 May 2019 14:56:15 GMT; httponly; prajiturica.sig=wOVz2mtnPGU-upbPZPkUCXpxOKc; path=/; expires=Thu, 16 May 2019 14:56:15 GMT; httponly
+Authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ino5MWN6OHZsanZxcHZ3dnQiLCJzY29wZSI6InN0dWRlbnQiLCJpYXQiOjE1NTgwMTQ5NzAsImV4cCI6MTU1ODAxODU3MCwiaXNzIjoiQWxleGFuZHJ1IEhvZ2VhIn0.u8sG4NYsxn6rHGEeystv4fEL7lz1IZoUKVCePnImNpGk6V-Dsrw6QQqoSt_MX0N2_6OJJYO-uiv7HzvTID-hzspQKNSOFW4qKLcWLpHnmUEVTrwGYe0lopDqKr0tDu39UJEMRsAeX8097oMQoRpPZd_KGx08Db-2DpMq55qcRwRbYaBuT4RxG_PSzKGdNXhaBJi0f7pNxf17_IGTGx_XHdSyyedT1Ap1vLefaWwx63IHxP9stHg00uY058xoIdUKpu-LYlAOKry8FUrK8qbXiuAtiSCG_nAdKaBNPq2ge0zOZC3lxdbQcDd_fXrRaLnS2mP8mqPHe7j0-qxc_eDxbg
+
+TASK 5:
+
+- to api.openweathermap.org:
+
+GET /data/2.5/weather?q=bucharest&APPID=80f21fc11662726c0c3c8c5512d89b3a HTTP/1.1
+Host: 37.139.20.5
+Cookie: prajiturica=eyJ1c2VybmFtZSI6IjY2dGxuOVBEIiwicGFzc3dvcmQiOiJCR3NoWmhVZCIsInRhc2syIjoiejkxY3o4dmxqdnFwdnd2dCIsInRhc2szIjoiY29tcGxldGVkIiwidGFzazQiOiJyZXRyaWV2ZWQiLCJfZXhwaXJlIjoxNTU4MDE4NTgwNDA3LCJfbWF4QWdlIjozNjAwMDAwfQ==; path=/; expires=Thu, 16 May 2019 14:56:20 GMT; httponly; prajiturica.sig=cuSmXqrv-fZW6cFg2YOuXNiQQVE; path=/; expires=Thu, 16 May 2019 14:56:20 GMT; httponly
+
+- to server:
+
+POST /task5/treasure HTTP/1.1
+Host: 185.118.200.35
+Cookie: prajiturica=eyJ1c2VybmFtZSI6IjY2dGxuOVBEIiwicGFzc3dvcmQiOiJCR3NoWmhVZCIsInRhc2syIjoiejkxY3o4dmxqdnFwdnd2dCIsInRhc2szIjoiY29tcGxldGVkIiwidGFzazQiOiJyZXRyaWV2ZWQiLCJfZXhwaXJlIjoxNTU4MDE4NTgwNDA3LCJfbWF4QWdlIjozNjAwMDAwfQ==; path=/; expires=Thu, 16 May 2019 14:56:20 GMT; httponly; prajiturica.sig=cuSmXqrv-fZW6cFg2YOuXNiQQVE; path=/; expires=Thu, 16 May 2019 14:56:20 GMT; httponly
+Authorization: Basic eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ino5MWN6OHZsanZxcHZ3dnQiLCJzY29wZSI6InN0dWRlbnQiLCJpYXQiOjE1NTgwMTQ5NzAsImV4cCI6MTU1ODAxODU3MCwiaXNzIjoiQWxleGFuZHJ1IEhvZ2VhIn0.u8sG4NYsxn6rHGEeystv4fEL7lz1IZoUKVCePnImNpGk6V-Dsrw6QQqoSt_MX0N2_6OJJYO-uiv7HzvTID-hzspQKNSOFW4qKLcWLpHnmUEVTrwGYe0lopDqKr0tDu39UJEMRsAeX8097oMQoRpPZd_KGx08Db-2DpMq55qcRwRbYaBuT4RxG_PSzKGdNXhaBJi0f7pNxf17_IGTGx_XHdSyyedT1Ap1vLefaWwx63IHxP9stHg00uY058xoIdUKpu-LYlAOKry8FUrK8qbXiuAtiSCG_nAdKaBNPq2ge0zOZC3lxdbQcDd_fXrRaLnS2mP8mqPHe7j0-qxc_eDxbg
+Content-Type: application/json
+Content-Length: 449
+
+{"coord":{"lon":26.1,"lat":44.44},"weather":[{"id":803,"main":"Clouds","description":"broken clouds","icon":"04d"}],"base":"stations","main":{"temp":293.26,"pressure":1011,"humidity":68,"temp_min":293.15,"temp_max":293.71},"visibility":10000,"wind":{"speed":3.6,"deg":50},"clouds":{"all":75},"dt":1558014642,"sys":{"type":1,"id":6911,"message":0.0056,"country":"RO","sunrise":1557974867,"sunset":1558028180},"id":683506,"name":"Bucharest","cod":200}
+
