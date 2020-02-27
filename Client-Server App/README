@@ -1,0 +1,158 @@
+TERENTE ANDREI-ALEXANDRU
+325 CA
+Protocoale de Comunicatie. Tema 2. README
+
+===============================================================================
+I. Compilare
+
+-------------------------------------------------------------------------------
+	-> fisierul Makefile trebuie sa se afle in acelasi folder cu sursele si
+	contine urmatoarele reguli:
+		- build: compileaza sursele "server.cpp" si "subscriber.cpp" si
+		genereaza executabilele "server", respectiv "subscriber".
+
+		- clean: sterge executabilele si fisierele obiect generate la compilare
+
+
+===============================================================================
+II. Detalii legate de implementare
+
+-------------------------------------------------------------------------------
+[1] Structuri folosite  + constante:
+-------------------------------------------------------------------------------
+	-> topic:
+		- incapsuleaza informatiile referitoare la un anumit topic (numele
+		topic-ului si un parametru pe baza caruia se determina daca pt.
+		respectivul topic, clientul a activat functia de S&F).
+
+	-> msg_udp:
+		- incapsuleaza continutul mesajului primit in datagramele trimise de
+		clientii UDP si metadatele necesare pt. parsarea continutului / pt.
+		afisare (adresa ip publisher, port publisher, tip mesaj).
+
+	-> client_tcp:
+		- incapsuleaza informatiile necesare pentru gestionarea clientilor TCP
+		in cadrul server-ului (adresa ip client, port client, statut de 
+		conectare, sockfd-ul pt. comunicarea cu server-ul, lista de abonamente,
+		container de mesaje stocate in server)
+
+	-> constante:
+		- semnificatia constantelor este descrisa punctual in fisierul 
+		"helpers.h".
+
+-------------------------------------------------------------------------------
+[2] Server:
+-------------------------------------------------------------------------------
+	-> la rularea server-ului (presupunand ca parametrii dati sunt corecti),
+	se realizeaza initializarea si legarea:
+		- socket-ului TCP: socket pasiv prin care se primesc cererile de
+		conexiune de la subscriberi,
+
+		- si a socket-ului UDP: socket prin care se primesc datagramele de
+		la publisheri.
+
+	-> cand se primeste o cerere de conectare de la un subscriber, serverul
+	accepta cererea (deschizand un nou socket pt. comunicarea cu respectivul
+	client), apoi verifica daca acest client a mai fost anterior conectat.
+	In cazul in care acesta este la prima conectare, este adaugat in lista
+	de clienti. In caz contrar, acestuia i se actualizeaza descriptorul de
+	socket si i se trimit mesajele stocate de server cat timp clientul a fost
+	offline.
+
+	-> cand se primeste o datagrama de la un publisher, este populata structura
+	msg_udp si trimisa tuturor clientilor TCP online abonati la subiectul primit.
+	(clientilor TCP offline abonati cu functia S&F activata le este stocat
+	mesajul in server).
+		- Parsarea continutului pt. afisare se realizeaza in client.
+
+	-> cand se primeste un mesaj de la un client TCP, se verifica initial
+	corectitudinea mesajului (comanda cunoscuta de server + nr. de parametrii
+	corespunzator comenzii). In cazul in care in urma verificarii se constata ca
+	s-a primit un mesaj eronat, mesajul este ignorat. In caz contrar, se aplica
+	comanda, astfel:
+		- subscribe nume_topic SF:
+			- se aboneaza clientul la nume_topic
+			- functia S&F este activata pentru nume_topic doar cand functia
+			atoi(SF) intoarce valoarea 1. In orice alta situatie, se considera
+			implicit ca S&F este dezactivat.
+
+		- unsubscribe nume_topic:
+			- clientul este dezabonat de la nume_topic
+
+	-> cand se primeste un mesaj de tastatura, server-ul verifica daca mesajul
+	este comanda "exit". Daca intr-adevar, continutul mesajului este "exit",
+	server-ul trimite un mesaj tuturor clientilor TCP conectati la momentul
+	respectiv in care le cere deconectarea, apoi inchide socket-urile inca
+	deschise si incheie executarea programului. Orice alt mesaj primit de la
+	tastatura este implicit ignorat de catre server.
+
+-------------------------------------------------------------------------------
+[3] Subscriber:
+-------------------------------------------------------------------------------
+	-> la rularea unui client TCP (presupunand ca s-a putut realiza o legatura
+	cu server-ul, parametrii dati fiind corecti), este implicit trimis un mesaj
+	catre server ce contine id-ul clientului, ca acesta sa poata fi recunoscut.
+
+	-> cand se primeste un mesaj de la tastatura, clientul se asteapta ca
+	acesta sa fie:
+		- "subscribe" + parametrii: trimite mai departe server-ului
+		- "unsubscribe" + parametrii: trimite mai departe server-ului
+		- "exit": inchide socket-ul si termina executia programului
+		- in orice alt caz,  mesajul este ignorat
+
+	-> cand se primeste un mesaj de la server, clientul se asteapta ca
+	acesta sa fie:
+		- msg_udp in care este incapsulata o comanda de exit: client-ul
+		se comporta ca la primirea comenzii "exit" de la tastatura
+		- msg_udp standard cu informatia de la publisher: realizeaza
+		parsarea in functie de tipul mesajului si afisarea acestuia
+		in format-ul cerut.
+
+-------------------------------------------------------------------------------
+[4] Parsare + afisare mesaj de la publisher:
+-------------------------------------------------------------------------------
+	-> prin "se obtine valoarea efectiva" ma refer la faptul ca
+	se extrag numarul de bytes precizati si apoi se realizeaza 
+	transformarea din network byte-order in host byte-order. Rezultatul
+	acestei operatii reprezinta "valoarea efectiva".
+
+	-> in functie de tip, parsarea se realizeaza astfel:
+		- INT: se obtin bit-ul de semn si valoarea efectiva
+		si se returneaza (int) valoare efectiva * semn
+
+		- SHORT_REAL: se obtine valoarea efectiva si
+		se intoarce (float) valoare efectiva / 100;
+
+		- FLOAT: se obtin bit-ul de semn, valoarea
+		efectiva si exponentul si se intoarce
+		(double) valoare efectiva / pow(10, exponent).
+		De asemenea se retine exponentul pt. afisare.
+
+		- STRING: nu este necesara parsarea continutului.
+		String-ul contine terminatorul de sir implicit, adaugat
+		la trimiterea acestuia de la server la clientul TCP.
+
+	-> pentru urmatoarele tipuri, am realizat afisarea in formatul
+	cerut astfel:
+		- SHORT_REAL: se afiseaza in precizie de doua zecimale folosind
+		specificatorul "%.2f".
+
+		- FLOAT: se afiseaza in precizia ceruta folosind specificatorul
+		"%.*f" impreuna cu valoarea exponentului extrasa din mesaj.
+
+-------------------------------------------------------------------------------
+[5] Mentiuni suplimentare / Observatii:
+-------------------------------------------------------------------------------
+	-> un aspect ineficient al implementarii il constituie utilizarea
+	vectorilor pentru stocarea atat a clientilor cat si a topic-urilor. O
+	imbunatatire clara o constituie utilizarea dictionarelor (cu id-urile
+	drept chei) pentru a reduce semnificativ timpul de cautare.
+
+	-> macro-ul DIE este folosit pretutindeni in implementarile atat a
+	serverului cat si a clientului. Majoritatea situatiilor in care s-ar
+	putea ajunge intr-o stare nedefinita sunt gestionate de aceste verificari.
+
+	-> tema compileaza (pe masina mea) cu flag-ul -Werror, insa daca se intampla
+	sa nu compileze la testare (din orice motiv necunoscut mie), rog compilarea
+	fara acest flag.
+
